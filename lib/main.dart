@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/tabs.dart';
 import 'package:meals_app/theme/my_theme.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: MyTheme.theme,
       debugShowCheckedModeBanner: false,
-      home: Container(),
+      home: const TabsScreen(),
     );
   }
 }
