@@ -434,7 +434,7 @@ const dummyMeals = [
   Meal(
     id: 'm14',
     categories: ['c11'],
-    title: 'Mahshi (Stuffed Vegetables)',
+    title: 'Mahshi',
     affordability: Affordability.affordable,
     complexity: Complexity.challenging,
     imageUrl:
