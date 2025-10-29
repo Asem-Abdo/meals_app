@@ -32,73 +32,84 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               );
             },
-            icon: isFavorite
-                ? Icon(Icons.star)
-                : Icon(Icons.star_border_outlined),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween(begin: .8, end: 1.0).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavorite),
+              ),
+            ),
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FadeInImage(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: meal.id,
+              child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
                 image: NetworkImage(meal.imageUrl),
-                height: 200,
+                height: 300,
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
-              const SizedBox(height: 14),
-              SizedBox(
-                width: double.infinity,
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Ingredients',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 14),
+            for (final ingredient in meal.ingredients)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Text(
-                  'Ingredients',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                  ingredient,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
-              const SizedBox(height: 14),
-              for (final ingredient in meal.ingredients)
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    ingredient,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Steps',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
                 ),
-              const SizedBox(height: 14),
-              SizedBox(
-                width: double.infinity,
+              ),
+            ),
+            const SizedBox(height: 14),
+            for (final step in meal.steps)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Text(
-                  'Steps',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                  step,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
-              const SizedBox(height: 14),
-              for (final step in meal.steps)
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    step,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
